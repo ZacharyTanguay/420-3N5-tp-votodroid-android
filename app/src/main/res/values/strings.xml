@@ -3,4 +3,7 @@
 
     <string name="action_supprimerQuestions">Supprimer toutes les questions</string>
     <string name="action_supprimerVotes">Supprimer tous les votes</string>
+    <string name="ajouter">Ajouter</string>
+    <string name="Ta_question">Ta question</string>
+    <string name="pose_la_question">POSE LA QUESTION</string>
 </resources>

@@ -8,12 +8,12 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnAjouter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:gravity="center"
-        android:text="Ajouter"
+        android:text="@string/ajouter"
         android:visibility="visible"
         tools:layout_editor_absoluteX="55dp"
         tools:layout_editor_absoluteY="71dp"
