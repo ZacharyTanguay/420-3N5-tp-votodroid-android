@@ -1,6 +1,8 @@
 package tanguay.votedroid;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,16 +14,21 @@ import android.view.MenuItem;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     Button buttonAjouter;
+    ListeAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.initRecycler();
+        this.remplirRecycler();
 
         buttonAjouter = (Button) findViewById(R.id.btnAjouter);
         buttonAjouter.setOnClickListener(new View.OnClickListener() {
@@ -53,5 +60,26 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void remplirRecycler() {
+        Question question = null;
+        for (int i = 0; i < 25; i++) {
+            question = new Question();
+            question.question = "Joris est déguiser en stormtrooper ? " + i;
+            adapter.list.add(question);
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void initRecycler() {
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new ListeAdapter();
+        recyclerView.setAdapter(adapter);
     }
 }
