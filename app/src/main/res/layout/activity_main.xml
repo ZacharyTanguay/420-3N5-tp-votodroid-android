@@ -12,11 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:gravity="center"
+        android:padding="10dp"
         android:text="@string/ajouter"
         android:visibility="visible"
         tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="71dp"
-        />
+        tools:layout_editor_absoluteY="71dp" />
 
     <view class="androidx.recyclerview.widget.RecyclerView"
         android:orientation="horizontal"

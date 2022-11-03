@@ -1,26 +1,23 @@
 package tanguay.votedroid;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-
-import android.view.Menu;
-
-import android.view.MenuItem;
-
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
 public class MainActivity extends AppCompatActivity {
 
     Button buttonAjouter;
-    ListeAdapter adapter;
+    QuestionAdapter adapter;
+    ImageButton buttonGraphique;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentAjouter);
             }
         });
+
     }
 
     @Override
@@ -79,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new ListeAdapter();
+        adapter = new QuestionAdapter();
         recyclerView.setAdapter(adapter);
     }
 }

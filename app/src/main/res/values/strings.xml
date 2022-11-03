@@ -6,4 +6,6 @@
     <string name="ajouter">Ajouter</string>
     <string name="Ta_question">Ta question</string>
     <string name="pose_la_question">POSE LA QUESTION</string>
+    <string name="Moyenne">Moyenne</string>
+    <string name="ÉcartType">Écart type</string>
 </resources>
