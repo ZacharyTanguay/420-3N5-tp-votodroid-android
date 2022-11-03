@@ -32,6 +32,7 @@
             android:name=".Graphique"
             android:exported="true">
         </activity>
+        <activity android:name="tanguay.votedroid.Vote" />
     </application>
 
 </manifest>

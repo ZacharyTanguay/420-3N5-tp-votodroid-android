@@ -18,17 +18,17 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     public List<Question> list;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvQuestion;
+        public TextView btnQuestion;
         public ImageButton btnGraph;
 
         public ViewHolder(LinearLayout view) {
             super(view);
-            tvQuestion = view.findViewById(R.id.tvQuestion);
+            btnQuestion = view.findViewById(R.id.btnQuestion);
             btnGraph = view.findViewById(R.id.btnGraphique);
         }
 
         public TextView getTextView() {
-            return tvQuestion;
+            return btnQuestion;
         }
     }
 
@@ -53,12 +53,20 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         Question questionCourante = list.get(position);
-        viewHolder.tvQuestion.setText(questionCourante.question);
+        viewHolder.btnQuestion.setText(questionCourante.question);
         viewHolder.btnGraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentAjouter = new Intent(view.getContext(),Graphique.class);
-                view.getContext().startActivity(intentAjouter);
+                Intent intentGraph = new Intent(view.getContext(),Graphique.class);
+                view.getContext().startActivity(intentGraph);
+            }
+        });
+
+        viewHolder.btnQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentVote = new Intent(view.getContext(),Vote.class);
+                view.getContext().startActivity(intentVote);
             }
         });
     }

@@ -8,4 +8,5 @@
     <string name="pose_la_question">POSE LA QUESTION</string>
     <string name="Moyenne">Moyenne</string>
     <string name="ÉcartType">Écart type</string>
+    <string name="VOTE">VOTE</string>
 </resources>
