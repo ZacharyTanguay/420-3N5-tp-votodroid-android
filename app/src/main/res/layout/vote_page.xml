@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
     android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
     tools:context=".MainActivity">
 
     <TextView
@@ -13,14 +15,14 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="25dp"
         android:layout_marginTop="20dp"
-        android:text="@string/Ta_question"
-        android:textSize="40dp" />
+        android:text="Que pense-tu de l'ascension de skywalker ?"
+        android:textSize="30dp" />
 
     <RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="25dp"
+        android:layout_gravity="center_horizontal"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <EditText
@@ -29,7 +31,6 @@
         android:layout_margin="20sp"
         android:layout_marginHorizontal="30dp"
         android:hint="Nom du votant"
-        android:text="Nom du votant"
         android:textSize="20dp" />
 
     <Button

@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         Question question = null;
         for (int i = 0; i < 25; i++) {
             question = new Question();
-            question.question = "Joris est déguiser en stormtrooper ? " + i;
+            question.question = "Joris est déguisé en stormtrooper ? " + i;
             adapter.list.add(question);
         }
         adapter.notifyDataSetChanged();
