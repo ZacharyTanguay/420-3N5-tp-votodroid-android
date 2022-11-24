@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import tanguay.votedroid.modele.VDQuestion;
+
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
 
-    public List<Question> list;
+    public List<VDQuestion> list;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView btnQuestion;
@@ -52,8 +54,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        Question questionCourante = list.get(position);
-        viewHolder.btnQuestion.setText(questionCourante.question);
+        VDQuestion questionCourante = list.get(position);
+        viewHolder.btnQuestion.setText(questionCourante.texteQuestion);
         viewHolder.btnGraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

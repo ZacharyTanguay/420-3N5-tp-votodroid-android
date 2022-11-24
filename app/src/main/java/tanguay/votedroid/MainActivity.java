@@ -2,6 +2,7 @@ package tanguay.votedroid;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,8 +13,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+
+import tanguay.votedroid.bd.BD;
+import tanguay.votedroid.exceptions.MauvaiseQuestion;
+import tanguay.votedroid.modele.VDQuestion;
+import tanguay.votedroid.service.Service;
 
 public class MainActivity extends AppCompatActivity {
+    private Service service;
+    private BD maBD;
 
     Button buttonAjouter;
     QuestionAdapter adapter;
@@ -23,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        maBD =  Room.databaseBuilder(getApplicationContext(), BD.class, "BDQuestions")
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
+        service = new Service(maBD);
+        creerQuestion();
 
         this.initRecycler();
         this.remplirRecycler();
@@ -35,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentAjouter);
             }
         });
-
     }
 
     @Override
@@ -60,14 +75,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void remplirRecycler() {
-        Question question = null;
-        for (int i = 0; i < 25; i++) {
-            question = new Question();
-            question.question = "Joris est déguisé en stormtrooper ? " + i;
-            adapter.list.add(question);
+    private void creerQuestion (){
+        try{
+            VDQuestion maQuestion = new VDQuestion();
+            maQuestion.texteQuestion = "As-tu hâte au nouveau film The Matrix Resurrections?";
+            service.creerQuestion(maQuestion);
+        }catch (MauvaiseQuestion m){
+            Log.e("CREERQUESTION", "Impossible de créer la question : " + m.getMessage());
         }
-        adapter.notifyDataSetChanged();
     }
 
     private void initRecycler() {
@@ -79,5 +94,11 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new QuestionAdapter();
         recyclerView.setAdapter(adapter);
+    }
+
+    private void remplirRecycler() {
+        adapter.list.clear();
+        adapter.list.addAll(service.toutesLesQuestions());
+        adapter.notifyDataSetChanged();
     }
 }
