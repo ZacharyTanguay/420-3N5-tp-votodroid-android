@@ -15,4 +15,6 @@ public class VDVote {
 
     public int valeurVote;
 
+    public String votant;
+
 }

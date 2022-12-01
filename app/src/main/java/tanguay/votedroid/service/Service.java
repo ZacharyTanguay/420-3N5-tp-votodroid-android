@@ -1,6 +1,7 @@
 package tanguay.votedroid.service;
 
 import tanguay.votedroid.bd.BD;
+import tanguay.votedroid.exceptions.MauvaisVote;
 import tanguay.votedroid.exceptions.MauvaiseQuestion;
 import tanguay.votedroid.modele.VDQuestion;
 import tanguay.votedroid.modele.VDVote;
@@ -30,13 +31,15 @@ public class Service {
             }
         }
 
-        // Ajout
         vdQuestion.idQuestion = maBD.monDao().insertQuestion(vdQuestion);
     }
 
     
-    public void creerVote(VDVote vdVote) {
+    public void creerVote(VDVote vdVote) throws MauvaisVote {
+        if (vdVote.votant == null || vdVote.votant.trim().length() == 0) throw new MauvaisVote("Nom du votant vide");
+        if (vdVote.votant.trim().length() < 5) throw new MauvaisVote("Nom du votant trop court");
 
+        vdVote.idQuestion = maBD.monDao().insertVote(vdVote);
     }
 
     
@@ -45,6 +48,16 @@ public class Service {
         //TODO À faire :        trier la liste reçue en BD par le nombre de votes et la retourner
         List<VDQuestion> toutesLesQuestions = maBD.monDao().listeQuestions();
         return toutesLesQuestions;
+    }
+
+    public VDQuestion questionParId(long id) {
+        List<VDQuestion> listQuestion = maBD.monDao().listeQuestions();
+        for (VDQuestion q: listQuestion) {
+            if (q.idQuestion == id) {
+                return q;
+            }
+        }
+        return null;
     }
 
     

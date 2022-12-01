@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="25dp"
         android:layout_marginTop="20dp"
-        android:text="Que pense-tu de l'ascension de skywalker ?"
+        android:layout_gravity="center_horizontal"
+        android:text=""
         android:textSize="30dp" />
 
     <RatingBar
@@ -26,6 +27,7 @@
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <EditText
+        android:id="@+id/votant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20sp"

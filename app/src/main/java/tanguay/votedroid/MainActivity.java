@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.action_supprimerQuestions) {
             Toast.makeText(getApplicationContext(),"Supprimer toutes les questions",Toast.LENGTH_SHORT).show();
+            service.supprimerQuestions();
+            remplirRecycler();
             return true;
         }
         if (id == R.id.action_supprimerVotes) {

@@ -56,19 +56,19 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         // contents of the view with that element
         VDQuestion questionCourante = list.get(position);
         viewHolder.btnQuestion.setText(questionCourante.texteQuestion);
+        viewHolder.btnQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), VoteActivity.class);
+                i.putExtra("id",questionCourante.idQuestion);
+                view.getContext().startActivity(i);
+            }
+        });
         viewHolder.btnGraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intentGraph = new Intent(view.getContext(), GraphiqueActivity.class);
                 view.getContext().startActivity(intentGraph);
-            }
-        });
-
-        viewHolder.btnQuestion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentVote = new Intent(view.getContext(), VoteActivity.class);
-                view.getContext().startActivity(intentVote);
             }
         });
     }
