@@ -71,6 +71,10 @@ public class Service {
     }
 	
 	public void supprimerQuestions(){
+        List<VDQuestion> listQuestion = maBD.monDao().listeQuestions();
+        for (VDQuestion q: listQuestion) {
+            maBD.monDao().deleteQuestion(q);
+        }
 	}
 	
 	public void supprimerVotes(){
