@@ -42,15 +42,13 @@ public class MainActivity extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .build();
         service = new Service(maBD);
-
         binding.btnAjouter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentAjouter = new Intent(MainActivity.this, CreationActivity.class);
-                startActivity(intentAjouter);
+                Intent i = new Intent(MainActivity.this, CreationActivity.class);
+                startActivity(i);
             }
         });
-
         this.initRecycler();
         this.remplirRecycler();
     }
@@ -75,18 +73,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void creerQuestion (){
-        try{
-            VDQuestion maQuestion = new VDQuestion();
-            maQuestion.texteQuestion = "As-tu hâte au nouveau film The Matrix Resurrections?";
-            service.creerQuestion(maQuestion);
-        }catch (MauvaiseQuestion m){
-            Log.e("CREERQUESTION", "Impossible de créer la question : " + m.getMessage());
-
-            Toast.makeText(getApplicationContext(), m.getMessage(), Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void initRecycler() {
