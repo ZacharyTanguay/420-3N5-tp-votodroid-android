@@ -59,7 +59,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         viewHolder.btnGraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentGraph = new Intent(view.getContext(),Graphique.class);
+                Intent intentGraph = new Intent(view.getContext(), GraphiqueActivity.class);
                 view.getContext().startActivity(intentGraph);
             }
         });
@@ -67,7 +67,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         viewHolder.btnQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentVote = new Intent(view.getContext(),Vote.class);
+                Intent intentVote = new Intent(view.getContext(), VoteActivity.class);
                 view.getContext().startActivity(intentVote);
             }
         });

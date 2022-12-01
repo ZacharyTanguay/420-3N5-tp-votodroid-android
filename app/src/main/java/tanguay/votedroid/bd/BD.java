@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase;
 
 import tanguay.votedroid.modele.VDQuestion;
 
-@Database(entities = {VDQuestion.class}, version = 1,  exportSchema = true)
+@Database(entities = {VDQuestion.class}, version = 2,  exportSchema = true)
 public abstract class BD extends RoomDatabase {
     public abstract MonDao monDao();
 }

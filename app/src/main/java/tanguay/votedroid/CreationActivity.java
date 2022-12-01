@@ -1,23 +1,28 @@
 package tanguay.votedroid;
 
-import android.content.Intent;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
-import androidx.annotation.Nullable;
+import tanguay.votedroid.databinding.ActivityCreationBinding;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class CreationQuestion extends AppCompatActivity {
-
+public class CreationActivity extends AppCompatActivity {
+    private ActivityCreationBinding binding;
     Button buttonQuestion;
+    EditText Question;
 
     @Override
     protected void onCreate(@Nullable Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
-        setContentView(R.layout.creation_page);
+        binding = ActivityCreationBinding.inflate(getLayoutInflater());
+        View v = binding.getRoot();
+        setContentView(v);
 
+        Question = (EditText) findViewById(R.id.Question);
         buttonQuestion = (Button) findViewById(R.id.btnQuestion);
         buttonQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,5 +30,7 @@ public class CreationQuestion extends AppCompatActivity {
                 finish();
             }
         });
+
+
     }
 }

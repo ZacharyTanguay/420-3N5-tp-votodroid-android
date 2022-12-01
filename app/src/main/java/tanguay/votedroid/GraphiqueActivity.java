@@ -1,9 +1,12 @@
 package tanguay.votedroid;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import tanguay.votedroid.databinding.ActivityCreationBinding;
+import tanguay.votedroid.databinding.ActivityGraphiqueBinding;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -19,13 +22,17 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Graphique extends AppCompatActivity {
+
+public class GraphiqueActivity extends AppCompatActivity {
+    private ActivityGraphiqueBinding binding;
     BarChart chart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.graphique_page);
+        binding = ActivityGraphiqueBinding.inflate(getLayoutInflater());
+        View v = binding.getRoot();
+        setContentView(v);
         chart = findViewById(R.id.chart);
 
 

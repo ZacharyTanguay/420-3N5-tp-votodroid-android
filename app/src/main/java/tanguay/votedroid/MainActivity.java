@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import tanguay.votedroid.bd.BD;
+import tanguay.votedroid.databinding.ActivityMainBinding;
 import tanguay.votedroid.exceptions.MauvaiseQuestion;
 import tanguay.votedroid.modele.VDQuestion;
 import tanguay.votedroid.service.Service;
@@ -23,6 +24,7 @@ import tanguay.votedroid.service.Service;
 public class MainActivity extends AppCompatActivity {
     private Service service;
     private BD maBD;
+    private ActivityMainBinding binding;
 
     Button buttonAjouter;
     QuestionAdapter adapter;
@@ -31,26 +33,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View v = binding.getRoot();
+        setContentView(v);
 
         maBD =  Room.databaseBuilder(getApplicationContext(), BD.class, "BDQuestions")
                 .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build();
         service = new Service(maBD);
-        creerQuestion();
 
-        this.initRecycler();
-        this.remplirRecycler();
-
-        buttonAjouter = (Button) findViewById(R.id.btnAjouter);
-        buttonAjouter.setOnClickListener(new View.OnClickListener() {
+        binding.btnAjouter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentAjouter = new Intent(MainActivity.this,CreationQuestion.class);
+                Intent intentAjouter = new Intent(MainActivity.this, CreationActivity.class);
                 startActivity(intentAjouter);
             }
         });
+
+        this.initRecycler();
+        this.remplirRecycler();
     }
 
     @Override
@@ -82,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
             service.creerQuestion(maQuestion);
         }catch (MauvaiseQuestion m){
             Log.e("CREERQUESTION", "Impossible de créer la question : " + m.getMessage());
+
+            Toast.makeText(getApplicationContext(), m.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
