@@ -6,6 +6,7 @@ import tanguay.votedroid.exceptions.MauvaiseQuestion;
 import tanguay.votedroid.modele.VDQuestion;
 import tanguay.votedroid.modele.VDVote;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
