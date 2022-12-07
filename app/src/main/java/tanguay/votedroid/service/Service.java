@@ -76,22 +76,46 @@ public class Service {
 
     
     public float moyenneVotes(VDQuestion question) {
-        return 0;
+        List<VDVote> listVote = maBD.monDao().listeVotes();
+        float somme = 0;
+        int nbVote = 0;
+        for (VDVote v: listVote) {
+            if (v.idQuestion == question.idQuestion) {
+                somme += v.valeurVote;
+                nbVote++;
+            }
+        }
+        if (nbVote == 0) {
+            return 0;
+        }
+        return somme / nbVote;
     }
 
     
     public Map<Integer, Integer> distributionVotes(VDQuestion question) {
-        return null;
+        // Distribution des votes
+        List<VDVote> listVote = maBD.monDao().listeVotes();
+        Map<Integer, Integer> distribution = new java.util.HashMap<>();
+        for (VDVote v: listVote) {
+            if (v.idQuestion == question.idQuestion) {
+                if (distribution.containsKey(v.valeurVote)) {
+                    distribution.put(v.valeurVote, distribution.get(v.valeurVote) + 1);
+                } else {
+                    distribution.put(v.valeurVote, 1);
+                }
+            }
+        }
+        return distribution;
     }
 	
-	public void supprimerQuestions(){
+	public void supprimerQuestions() {
         List<VDQuestion> listQuestion = maBD.monDao().listeQuestions();
         for (VDQuestion q: listQuestion) {
             maBD.monDao().deleteQuestion(q);
         }
 	}
 	
-	public void supprimerVotes(){
+	public void supprimerVotes() {
         List<VDVote> listVote = maBD.monDao().listeVotes();
         for (VDVote v: listVote) {
             maBD.monDao().deleteVote(v);

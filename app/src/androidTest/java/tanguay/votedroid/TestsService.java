@@ -21,6 +21,8 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -125,7 +127,8 @@ public class TestsService {
         service.creerQuestion(question);
         service.creerQuestion(question2);
 
-        Assert.fail("Exception MauvaiseQuestion non lancée");
+        service.supprimerQuestions();
+        Assert.assertEquals(0, service.toutesLesQuestions().size());
     }
 
     @Test(expected = MauvaisVote.class)
@@ -140,7 +143,7 @@ public class TestsService {
     @Test(expected = MauvaisVote.class)
     public void ajoutVoteKOCourte() throws MauvaisVote {
         VDVote vote = new VDVote();
-        vote.votant = "aa";
+        vote.votant = "Vo";
         service.creerVote(vote);
 
         Assert.fail("Exception MauvaisVote non lancée");
@@ -149,7 +152,7 @@ public class TestsService {
     @Test(expected = MauvaisVote.class)
     public void ajoutVoteKOIDFixe() throws MauvaisVote {
         VDVote vote = new VDVote();
-        vote.votant = "aaaaaaaaaaaaaaaa";
+        vote.votant = "Votant";
         vote.idVote = 5L;
         service.creerVote(vote);
 
@@ -160,7 +163,7 @@ public class TestsService {
     @Test
     public void ajoutVoteOK() throws MauvaisVote {
         VDVote vote = new VDVote();
-        vote.votant = "Aimes-tu les brownies au chocolat?";
+        vote.votant = "Votant";
         service.creerVote(vote);
 
         Assert.assertNotNull(vote.votant);
@@ -172,8 +175,8 @@ public class TestsService {
         VDVote vote = new VDVote();
         VDVote vote2 = new VDVote();
 
-        vote.votant = "Aimes-tu les brownies au chocolat?";
-        vote2.votant = "Aimes-tu les BROWNIES au chocolAT?";
+        vote.votant = "Votant";
+        vote2.votant = "Votant";
 
         service.creerVote(vote);
         service.creerVote(vote2);
@@ -181,6 +184,54 @@ public class TestsService {
         //TODO Ce test va fail tant que vous n'implémenterez pas toutesLesvotes() dans ServiceImplementation
         Assert.fail("Exception MauvaisVote non lancée");
     }
+
+    @Test
+    public void supprimeVoteOK() throws MauvaisVote, MauvaiseQuestion {
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Aimes-tu les BROWNIES au chocolAT?";
+
+        service.creerQuestion(question);
+        Assert.assertNotNull(question.idQuestion);
+
+        VDVote vote = new VDVote();
+        vote.idQuestion = question.idQuestion;
+        vote.votant = "Votant";
+
+        service.creerVote(vote);
+        service.supprimerVotes();
+
+        Assert.assertEquals(0, service.toutesLesVotes().size());
+    }
+
+    @Test
+    public void moyenneVoteOK() throws MauvaisVote, MauvaiseQuestion {
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Aimes-tu les brownies au chocolat?";
+
+        service.creerQuestion(question);
+
+        VDVote vote = new VDVote();
+        VDVote vote2 = new VDVote();
+        VDVote vote3 = new VDVote();
+
+        vote.idQuestion = question.idQuestion;
+        vote.votant = "Votant";
+        vote.valeurVote = 1;
+        vote2.idQuestion = question.idQuestion;
+        vote2.votant = "VotantDeux";
+        vote2.valeurVote = 2;
+        vote3.idQuestion = question.idQuestion;
+        vote3.votant = "VotantTrois";
+        vote3.valeurVote = 3;
+
+        service.creerVote(vote);
+        service.creerVote(vote2);
+        service.creerVote(vote3);
+
+        service.moyenneVotes(question);
+        Assert.assertEquals(2, service.moyenneVotes(question), 0.1);
+    }
+
 
     /*
     @After
