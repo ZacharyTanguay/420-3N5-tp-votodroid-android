@@ -1,8 +1,12 @@
 package tanguay.votedroid;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+
+import tanguay.votedroid.exceptions.MauvaisVote;
+import tanguay.votedroid.modele.VDVote;
 
 /**
  * Example local unit test, which will execute on the development machine (host).

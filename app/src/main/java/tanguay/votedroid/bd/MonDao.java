@@ -19,10 +19,16 @@ public interface MonDao {
     Long insertVote(VDVote v);
 
     @Delete
-    void deleteQuestion(VDQuestion v);
+    void deleteQuestion(VDQuestion q);
+
+    @Delete
+    void deleteVote(VDVote v);
 
     //TODO Compléter les autres actions
-    @Query("SELECT * FROM VDQuestion")
+    @Query("SELECT * FROM VDQuestion ORDER BY (SELECT COUNT(*) FROM VDVote WHERE idQuestion = VDQuestion.idQuestion) DESC")
     List<VDQuestion> listeQuestions();
+
+    @Query("SELECT * FROM VDVote")
+    List<VDVote> listeVotes();
 
 }

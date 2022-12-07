@@ -1,8 +1,10 @@
 package tanguay.votedroid;
 
 import tanguay.votedroid.bd.BD;
+import tanguay.votedroid.exceptions.MauvaisVote;
 import tanguay.votedroid.exceptions.MauvaiseQuestion;
 import tanguay.votedroid.modele.VDQuestion;
+import tanguay.votedroid.modele.VDVote;
 import tanguay.votedroid.service.Service;
 
 import android.content.Context;
@@ -112,6 +114,73 @@ public class TestsService {
         Assert.fail("Exception MauvaiseQuestion non lancée");
     }
 
+    @Test(expected = MauvaiseQuestion.class)
+    public void supprimeQuestionOK() throws MauvaiseQuestion {
+        VDQuestion question = new VDQuestion();
+        VDQuestion question2 = new VDQuestion();
+
+        question.texteQuestion = "Aimes-tu les brownies au chocolat?";
+        question2.texteQuestion = "Aimes-tu les BROWNIES au chocolAT?";
+
+        service.creerQuestion(question);
+        service.creerQuestion(question2);
+
+        Assert.fail("Exception MauvaiseQuestion non lancée");
+    }
+
+    @Test(expected = MauvaisVote.class)
+    public void ajoutVoteKOVide() throws MauvaisVote {
+        VDVote vote = new VDVote();
+        vote.votant = "";
+        service.creerVote(vote);
+
+        Assert.fail("Exception MauvaiseQuestion non lancée");
+    }
+
+    @Test(expected = MauvaisVote.class)
+    public void ajoutVoteKOCourte() throws MauvaisVote {
+        VDVote vote = new VDVote();
+        vote.votant = "aa";
+        service.creerVote(vote);
+
+        Assert.fail("Exception MauvaisVote non lancée");
+    }
+
+    @Test(expected = MauvaisVote.class)
+    public void ajoutVoteKOIDFixe() throws MauvaisVote {
+        VDVote vote = new VDVote();
+        vote.votant = "aaaaaaaaaaaaaaaa";
+        vote.idVote = 5L;
+        service.creerVote(vote);
+
+        Assert.fail("Exception MauvaisVote non lancée");
+    }
+
+
+    @Test
+    public void ajoutVoteOK() throws MauvaisVote {
+        VDVote vote = new VDVote();
+        vote.votant = "Aimes-tu les brownies au chocolat?";
+        service.creerVote(vote);
+
+        Assert.assertNotNull(vote.votant);
+    }
+
+
+    @Test(expected = MauvaisVote.class)
+    public void ajoutVoteKOExiste() throws MauvaisVote {
+        VDVote vote = new VDVote();
+        VDVote vote2 = new VDVote();
+
+        vote.votant = "Aimes-tu les brownies au chocolat?";
+        vote2.votant = "Aimes-tu les BROWNIES au chocolAT?";
+
+        service.creerVote(vote);
+        service.creerVote(vote2);
+
+        //TODO Ce test va fail tant que vous n'implémenterez pas toutesLesvotes() dans ServiceImplementation
+        Assert.fail("Exception MauvaisVote non lancée");
+    }
 
     /*
     @After

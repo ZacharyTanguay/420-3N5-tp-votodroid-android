@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         }
         if (id == R.id.action_supprimerVotes) {
             Toast.makeText(getApplicationContext(),"Supprimer tous les votes",Toast.LENGTH_SHORT).show();
+            service.supprimerVotes();
+            remplirRecycler();
             return true;
         }
         return super.onOptionsItemSelected(item);

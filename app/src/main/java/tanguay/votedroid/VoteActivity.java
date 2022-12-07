@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class VoteActivity extends AppCompatActivity {
         service = new Service(maBD);
         VDQuestion question = service.questionParId(id);
         binding.voteQuestion.setText(question.texteQuestion);
+        RatingBar ratingBar = findViewById(R.id.ratingBar);
 
         binding.btnVote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +54,7 @@ public class VoteActivity extends AppCompatActivity {
                     vote = new VDVote();
                     vote.idQuestion = id;
                     vote.votant = binding.votant.getText().toString();
+                    vote.valeurVote = (int) ratingBar.getRating();
                     service.creerVote(vote);
                     startActivity(i);
 

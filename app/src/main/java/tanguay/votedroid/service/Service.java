@@ -38,7 +38,14 @@ public class Service {
     
     public void creerVote(VDVote vdVote) throws MauvaisVote {
         if (vdVote.votant == null || vdVote.votant.trim().length() == 0) throw new MauvaisVote("Nom du votant vide");
-        if (vdVote.votant.trim().length() < 5) throw new MauvaisVote("Nom du votant trop court");
+        if (vdVote.votant.trim().replaceAll(" ", "").length() < 4) throw new MauvaisVote("Nom du votant trop court");
+        if (vdVote.idVote != null) throw new MauvaisVote("Id non nul. La BD doit le gérer");
+
+        for (VDVote v : toutesLesVotes()){
+            if (v.votant.toUpperCase().equals(vdVote.votant.toUpperCase())){
+                throw new MauvaisVote("Vote existant");
+            }
+        }
 
         vdVote.idQuestion = maBD.monDao().insertVote(vdVote);
     }
@@ -50,6 +57,12 @@ public class Service {
         List<VDQuestion> toutesLesQuestions = maBD.monDao().listeQuestions();
         return toutesLesQuestions;
     }
+
+    public List<VDVote> toutesLesVotes() {
+        List<VDVote> toutesLesVotes = maBD.monDao().listeVotes();
+        return toutesLesVotes;
+    }
+
 
     public VDQuestion questionParId(long id) {
         List<VDQuestion> listQuestion = maBD.monDao().listeQuestions();
@@ -79,5 +92,9 @@ public class Service {
 	}
 	
 	public void supprimerVotes(){
+        List<VDVote> listVote = maBD.monDao().listeVotes();
+        for (VDVote v: listVote) {
+            maBD.monDao().deleteVote(v);
+        }
 	}
 }
