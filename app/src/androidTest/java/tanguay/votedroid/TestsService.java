@@ -232,6 +232,36 @@ public class TestsService {
         Assert.assertEquals(2, service.moyenneVotes(question), 0.1);
     }
 
+    //Test DistributionDesVotes
+    @Test
+    public void distributionDesVotesOK() throws MauvaisVote, MauvaiseQuestion {
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Aimes-tu les brownies au chocolat?";
+
+        service.creerQuestion(question);
+
+        VDVote vote = new VDVote();
+        VDVote vote2 = new VDVote();
+        VDVote vote3 = new VDVote();
+
+        vote.idQuestion = question.idQuestion;
+        vote.votant = "Votant";
+        vote.valeurVote = 1;
+        vote2.idQuestion = question.idQuestion;
+        vote2.votant = "VotantDeux";
+        vote2.valeurVote = 2;
+        vote3.idQuestion = question.idQuestion;
+        vote3.votant = "VotantTrois";
+        vote3.valeurVote = 3;
+
+        service.creerVote(vote);
+        service.creerVote(vote2);
+        service.creerVote(vote3);
+
+        Assert.assertEquals(0.81, service.distributionVotes(question), 0.01);
+
+    }
+
 
     /*
     @After

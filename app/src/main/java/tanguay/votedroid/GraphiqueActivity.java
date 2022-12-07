@@ -2,11 +2,17 @@ package tanguay.votedroid;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
+import tanguay.votedroid.bd.BD;
 import tanguay.votedroid.databinding.ActivityCreationBinding;
 import tanguay.votedroid.databinding.ActivityGraphiqueBinding;
+import tanguay.votedroid.modele.VDQuestion;
+import tanguay.votedroid.service.Service;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -15,6 +21,8 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +34,8 @@ import java.util.Map;
 public class GraphiqueActivity extends AppCompatActivity {
     private ActivityGraphiqueBinding binding;
     BarChart chart;
+    private Service service;
+    private BD maBD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +43,25 @@ public class GraphiqueActivity extends AppCompatActivity {
         binding = ActivityGraphiqueBinding.inflate(getLayoutInflater());
         View v = binding.getRoot();
         setContentView(v);
+
+        long id = getIntent().getLongExtra("id",-1L);
+
+        maBD =  Room.databaseBuilder(getApplicationContext(), BD.class, "BDQuestions")
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
+        service = new Service(maBD);
+
         chart = findViewById(R.id.chart);
+        TextView moyenne = findViewById(R.id.tVMoyenne);
+        TextView ecartType = findViewById(R.id.tVÉcart);
+        TextView titreQuestion = findViewById(R.id.tvQuestionSelectionner);
+        VDQuestion question = service.questionParId(id);
+        moyenne.setText("Moyenne: " + String.format("%.2f", service.moyenneVotes(question)));
+        ecartType.setText("Écart type: " + String.format("%.2f", service.distributionVotes(question)));
+        titreQuestion.setText(question.texteQuestion);
+
+        int[] votes = service.voteParQuestion(question.idQuestion);
 
 
         /* Settings for the graph - Change me if you want*/
@@ -62,11 +90,12 @@ public class GraphiqueActivity extends AppCompatActivity {
 
         /* Data and function call to bind the data to the graph */
         Map<Integer, Integer> dataGraph = new HashMap<Integer, Integer>() {{
-            put(0, 0);
-            put(0, 0);
-            put(3, 2);
-            put(4, 1);
-            put(5, 4);
+            put(0, votes[0]);
+            put(1, votes[1]);
+            put(2, votes[2]);
+            put(3, votes[3]);
+            put(4, votes[4]);
+            put(5, votes[5]);
         }};
         setData(dataGraph);
     }

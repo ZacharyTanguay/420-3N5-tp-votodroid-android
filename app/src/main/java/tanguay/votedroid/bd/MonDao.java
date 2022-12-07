@@ -31,4 +31,7 @@ public interface MonDao {
     @Query("SELECT * FROM VDVote")
     List<VDVote> listeVotes();
 
+    @Query("SELECT * FROM VDVote WHERE idQuestion = :idQuestion")
+    List<VDVote> VoteParQuestion(long idQuestion);
+
 }
